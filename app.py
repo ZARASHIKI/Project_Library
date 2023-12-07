@@ -26,9 +26,17 @@ app = Flask(__name__)
 SECRET_KEY = 'ZARASHIKI'
 
 
-@app.route("/")
+@app.route('/', methods=['GET'])
 def home():
-        return render_template('index.html')    
+    return render_template('index.html')
+
+@app.route('/login', methods=['GET'])
+def login():
+    return render_template('login.html')
+
+@app.route('/collection', methods=['GET'])
+def collection():
+    return render_template('collection.html')
    
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)

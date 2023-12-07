@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #F0F8EA;
+}
+
+/*------------ Login container ------------*/
+
+.box-area {
+    width: 930px;
+}
+
+/*------------ Right box ------------*/
+
+.right-box {
+    padding: 40px 30px 40px 40px;
+}
+
+/*------------ Custom Placeholder ------------*/
+
+::placeholder {
+    font-size: 16px;
+}
+
+.rounded-4 {
+    border-radius: 20px;
+}
+
+.rounded-5 {
+    border-radius: 30px;
+}
+
+
+/*------------ For small screens------------*/
+
+@media only screen and (max-width: 768px) {
+
+    .box-area {
+        margin: 0 10px;
+    }
+
+    .left-box {
+        padding: 40px;
+        border-radius: 20px;
+        background: #1e8957;
+        color: #fff;
+        text-align: center;
+    }
+
+    .right-box {
+        padding: 20px;
+        max-width: 900px;
+        margin: auto;
+        background: #fff;
+        border-radius: 10px;
+        border-color: #1e8957;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+    }
+
+}
+
+
+.navbar {
+    position: fixed;
+}
+
+.navbar-brand {
+    margin-top: 2px;
+}
+
+
+/* Section Welcome */
+section {
+    width: 100%;
+    height: 90vh;
+    background-size: cover;
+    background-position: center;
+}
+
+section .main {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    top: 5%;
+}
+
+section .main h1 {
+    position: relative;
+    font-size: 55px;
+    top: 80px;
+    left: 25px;
+}
+
+section .main h1 span {
+    color: #1e8957;
+}
+
+section .main p {
+    width: 650px;
+    text-align: justify;
+    line-height: 22px;
+    position: relative;
+    top: 125px;
+    left: 25px;
+}
+
+section .main .main_tag .main_btn {
+    background: #1e8957;
+    padding: 10px 20px;
+    position: relative;
+    top: 200px;
+    left: 25px;
+    color: #fff;
+    text-decoration: none;
+}
+
+section .main .main_img img {
+    width: 780px;
+    position: relative;
+    top: 90px;
+    left: 20px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e8957;
+    border-radius: 10px;
+}
+
+/* Kumpulan Buku di Homepage */
+.bukusss {
+  width: 100%;
+  height: 100vh;
+  margin-bottom: 5px;
+}
+
+.bukusss .bukusss_box {
+  width: 60%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 25px 0;
+}
+
+.bukusss .bukusss_box .bukusss_card {
+  width: 70%;
+  text-align: center;
+  padding: 5px;
+  /* border: 1px solid #919191; */
+  margin: auto 20px;
+}
+
+.bukusss .bukusss_box .bukusss_card:hover {
+  box-shadow: 0 0 5px #089da1;
+}
+
+.bukusss .bukusss_box .bukusss_card .bukusss_image {
+  width: 150px;
+  height: 220px;
+  margin: 0 auto;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.bukusss .bukusss_box .bukusss_card .bukusss_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: 0.3s;
+}
+
+.bukusss .bukusss_box .bukusss_card:hover .bukusss_image img {
+  transform: scale(1.1);
+}
+
+/*services*/
+
+.services{
+    width: 100%;
+    height: 100vh;
+    margin-bottom: 5px;
+}
+
+.services .services_box{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    top: 5%;
+}
+
+.services .services_box .services_card{
+    text-align: center;
+    width: 310px;
+    height: auto;
+    box-shadow: 0 0 8px #089da1;
+    padding: 15px 10px;
+}
+
+.services .services_box .services_card i{
+    color: #089da1;
+    font-size: 45px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.services .services_box .services_card h3{
+    margin-bottom: 10px;
+}
+
+
+
+/* Cover Only Coba */
+/* .container {
+    width: 100%;
+    height: 150vh;
+    margin-bottom: 35px;
+} */
+
+/* .fore-box {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 25px 0;
+}
+
+.rect-container {
+    position: relative;
+    width: 175px;
+    height: 243px;
+}
+
+.background-rect {
+    width: 175px;
+    height: 243px;
+    background-color: #D9D9D9;
+}
+
+.foreground-rect {
+    width: 174px;
+    height: 242px;
+    background-color: #FFFDFD;
+    border: 1px solid black;
+    position: absolute;
+    top: 10.5px;
+    left: 15.5px;
+} */
+
+/* Punya Anab */
+/* .container .rack{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;   
+}
+
+.box-buku {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    overflow: auto;
+}
+
+
+.kartu {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    overflow: hidden;
+    margin: 7px;
+}
+
+.book {
+    width: 100%;
+    height: 250px;
+    border: 1px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 7px;
+}
+
+.book img {
+    width: 100%;
+    object-fit: cover;
+} */

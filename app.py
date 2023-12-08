@@ -46,5 +46,9 @@ def detail():
 def bookmark():
     return render_template('bookmark.html')
    
+@app.route('/tambah', methods=['GET'])
+def tambah():
+    return render_template('tambah.html')
+   
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)

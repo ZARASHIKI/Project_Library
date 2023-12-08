@@ -210,7 +210,6 @@ section .main .main_img img {
 
 .add-koleksian:hover {
     transform: scale(1.01);
-    /* Increase the size on hover */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -326,9 +325,9 @@ section .main .main_img img {
 }
 
 .bagidua-container {
-    display: flex; 
-    justify-content: space-evenly; 
-    align-items: flex-start; 
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
 }
 
 .satu-container {
@@ -355,13 +354,13 @@ section .main .main_img img {
 }
 
 /* Page Detail Section Discover More Books */
-.discover{
+.discover {
     width: 90%;
     height: 90vh;
     padding: 100px 0 0 100px;
 }
 
-.discover h1{
+.discover h1 {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -369,7 +368,7 @@ section .main .main_img img {
     font-size: 45px;
 }
 
-.discover .discover-book-box{
+.discover .discover-book-box {
     width: 100%;
     height: 60vh;
     margin: 0 auto;
@@ -379,7 +378,7 @@ section .main .main_img img {
     overflow-x: scroll;
 }
 
-.discover .discover-book-box .discover-book-card{
+.discover .discover-book-box .discover-book-card {
     width: 250px;
     height: 330px;
     text-align: center;
@@ -387,23 +386,68 @@ section .main .main_img img {
     margin: auto 20px;
 }
 
-.discover .discover-book-box .discover-book-card:hover{
+.discover .discover-book-box .discover-book-card:hover {
     box-shadow: 0 0 5px #089da1;
 }
 
-.discover .discover-book-box .discover-book-card .discover-book-img img{
+.discover .discover-book-box .discover-book-card .discover-book-img img {
     width: 150px;
 }
-::-webkit-scrollbar{
+
+::-webkit-scrollbar {
     width: 10px;
     height: 5px;
 }
 
-::-webkit-scrollbar-track{
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
     background: #089da1;
     border-radius: 10px;
+}
+
+/* Tambah Page */
+.tambah {
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+}
+
+.tambah h1 {
+    position: absolute;
+    top: 100px;
+    left: 15.85cm;
+    font-weight: 900;
+    font-size: x-large;
+}
+
+.tambah .tambah-box {
+    width: 80%;
+    min-height: 90%;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.papan-tambah {
+    width: 60%;
+    max-width: 100%;
+    height: 110%;
+    max-height: 130%;
+    margin: 160px auto 30px;
+    padding-left: 5px;
+    background-color: #F4F4F4;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.papan-tambah .mb-3 {
+    width: 664px;
+    margin-top: 0px;
 }

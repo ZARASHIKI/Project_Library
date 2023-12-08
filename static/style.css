@@ -73,7 +73,7 @@ body {
 /* Section Welcome */
 section {
     width: 100%;
-    height: 90vh;
+    height: 100vh;
     background-size: cover;
     background-position: center;
 }
@@ -133,168 +133,277 @@ section .main .main_img img {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1e8957;
+    background: #35c07f;
     border-radius: 10px;
 }
 
 /* Kumpulan Buku di Homepage */
 .bukusss {
-  width: 100%;
-  height: 100vh;
-  margin-bottom: 5px;
+    width: 100%;
+    height: 200vh;
+    margin-bottom: 5px;
+    margin-top: 150px;
 }
 
 .bukusss .bukusss_box {
-  width: 60%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 25px 0;
+    width: 60%;
+    min-height: 85%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 25px 0;
 }
 
 .bukusss .bukusss_box .bukusss_card {
-  width: 70%;
-  text-align: center;
-  padding: 5px;
-  /* border: 1px solid #919191; */
-  margin: auto 20px;
+    width: 60%;
+    text-align: center;
+    padding: 5px;
+    /* border: 1px solid #919191; */
+    margin: auto 20px;
 }
 
 .bukusss .bukusss_box .bukusss_card:hover {
-  box-shadow: 0 0 5px #089da1;
+    box-shadow: 0 0 5px #089da1;
 }
 
 .bukusss .bukusss_box .bukusss_card .bukusss_image {
-  width: 150px;
-  height: 220px;
-  margin: 0 auto;
-  cursor: pointer;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
+    width: 150px;
+    height: 220px;
+    margin: 0 auto;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
 }
 
 .bukusss .bukusss_box .bukusss_card .bukusss_image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: 0.3s;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: 0.3s;
 }
 
 .bukusss .bukusss_box .bukusss_card:hover .bukusss_image img {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
-/*services*/
-
-.services{
+/* Collection Page */
+.koleksian {
     width: 100%;
     height: 100vh;
+    background-color: white;
+}
+
+.add-koleksian {
+    position: absolute;
+    top: 95px;
+    left: 120px;
+    padding: 10px;
+    background-color: #38d189;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.add-koleksian:hover {
+    transform: scale(1.01);
+    /* Increase the size on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.papan {
+    width: 80%;
+    max-width: 100%;
+    height: 90%;
+    max-height: 100%;
+    margin: 160px 120px 0;
+    padding-left: 120px;
+    background-color: #F4F4F4;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.koleksian h1 {
+    position: absolute;
+    top: 100px;
+    left: 15.85cm;
+    font-weight: 900;
+    font-size: x-large;
+}
+
+.koleksian .koleksian_box {
+    width: 80%;
+    min-height: 85%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-gap: 5px 0; */
+    /* justify-content: center; */
+}
+
+.koleksian .koleksian_box .koleksian_card {
+    width: 60%;
+    text-align: center;
+    padding: 5px;
+    /* border: 1px solid #919191; */
+    margin: auto 20px;
+}
+
+.koleksian .koleksian_box .koleksian_image {
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
     margin-bottom: 5px;
 }
 
-.services .services_box{
+.koleksian .koleksian_box .koleksian_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: 0.3s;
+}
+
+.koleksian .koleksian_box .koleksian_image:hover img {
+    transform: scale(1.1);
+}
+
+
+/* Page Detail Buku */
+/* Bagi Dua */
+.book-details {
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-    position: relative;
-    top: 5%;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 80px;
 }
 
-.services .services_box .services_card{
-    text-align: center;
-    width: 310px;
+.book-details img {
+    max-width: 200px;
     height: auto;
-    box-shadow: 0 0 8px #089da1;
-    padding: 15px 10px;
+    margin-right: 20px;
 }
 
-.services .services_box .services_card i{
-    color: #089da1;
-    font-size: 45px;
-    margin-bottom: 15px;
+.book-info {
+    flex: 1;
+}
+
+.book-info h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.book-info p {
+    margin-bottom: 10px;
+}
+
+.read-more-btn,
+.bookmark-btn,
+.edit-btn,
+.delete-btn {
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-}
-
-.services .services_box .services_card h3{
+    margin-right: 10px;
     margin-bottom: 10px;
 }
 
 
+.edit-delete-container {
+    display: flex;
+    flex-direction: row;
+}
 
-/* Cover Only Coba */
-/* .container {
-    width: 100%;
-    height: 150vh;
-    margin-bottom: 35px;
-} */
+.bagidua-container {
+    display: flex; 
+    justify-content: space-evenly; 
+    align-items: flex-start; 
+}
 
-/* .fore-box {
+.satu-container {
+    width: 35vh;
+    height: auto;
+    padding: 20px;
+    /* border: 2px solid black; */
+    margin-top: 5px;
+    margin-right: 40px;
+    padding-top: 6vh;
+}
+
+.satu-container img {
+    width: 142.2%;
+    max-width: 900px;
+    height: auto;
+}
+
+.dua-container {
+    width: 80vh;
+    padding: 32px;
+    /* border: 2px solid black; */
+    margin-top: 5px;
+}
+
+/* Page Detail Section Discover More Books */
+.discover{
     width: 90%;
+    height: 90vh;
+    padding: 100px 0 0 100px;
+}
+
+.discover h1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    font-size: 45px;
+}
+
+.discover .discover-book-box{
+    width: 100%;
+    height: 60vh;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-gap: 25px 0;
-}
-
-.rect-container {
-    position: relative;
-    width: 175px;
-    height: 243px;
-}
-
-.background-rect {
-    width: 175px;
-    height: 243px;
-    background-color: #D9D9D9;
-}
-
-.foreground-rect {
-    width: 174px;
-    height: 242px;
-    background-color: #FFFDFD;
-    border: 1px solid black;
-    position: absolute;
-    top: 10.5px;
-    left: 15.5px;
-} */
-
-/* Punya Anab */
-/* .container .rack{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 50vh;   
-}
-
-.box-buku {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 25px;
-    overflow: auto;
-}
-
-
-.kartu {
-    width: 100%;
-    background-color: #FFFFFF;
-    border: 1px solid #E0E0E0;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     overflow: hidden;
-    margin: 7px;
+    overflow-x: scroll;
 }
 
-.book {
-    width: 100%;
-    height: 250px;
-    border: 1px solid black;
-    border-radius: 5px;
-    overflow: hidden;
-    margin: 7px;
+.discover .discover-book-box .discover-book-card{
+    width: 250px;
+    height: 330px;
+    text-align: center;
+    padding: 5px;
+    margin: auto 20px;
 }
 
-.book img {
-    width: 100%;
-    object-fit: cover;
-} */
+.discover .discover-book-box .discover-book-card:hover{
+    box-shadow: 0 0 5px #089da1;
+}
+
+.discover .discover-book-box .discover-book-card .discover-book-img img{
+    width: 150px;
+}
+::-webkit-scrollbar{
+    width: 10px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track{
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-thumb{
+    background: #089da1;
+    border-radius: 10px;
+}

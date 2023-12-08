@@ -37,6 +37,14 @@ def login():
 @app.route('/collection', methods=['GET'])
 def collection():
     return render_template('collection.html')
+
+@app.route('/detail', methods=['GET'])
+def detail():
+    return render_template('detail.html')
+
+@app.route('/bookmark', methods=['GET'])
+def bookmark():
+    return render_template('bookmark.html')
    
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)

@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
 
 body {
@@ -60,7 +64,7 @@ body {
 
 }
 
-
+/* Navbar */
 .navbar {
     position: fixed;
 }
@@ -69,6 +73,30 @@ body {
     margin-top: 2px;
 }
 
+/* Navbar Efek */
+.navbar-nav .nav-item:hover .nav-link {
+    text-decoration: underline;
+}
+
+.navbar-nav .nav-item:hover .nav-link {
+    text-decoration: underline;
+    text-decoration-color: black; /* Warna efek underline */
+    text-decoration-style: solid; /* Gaya efek underline (dapat menggunakan dashed, dotted, etc.) */
+    text-decoration-thickness: 1px; /* Ketebalan efek underline */
+}
+
+/* Active (sedang dilihat) effect for Collection */
+.navbar-nav .nav-item.active-collection .nav-link {
+    text-decoration: underline;
+    text-decoration-color: black; /* Warna efek underline untuk Collection */
+
+}
+
+/* Active (sedang dilihat) effect for Bookmarks */
+.navbar-nav .nav-item.active-bookmark .nav-link {
+    text-decoration: underline;
+    text-decoration-color: black; /* Warna efek underline untuk Bookmarks */
+}
 
 /* Section Welcome */
 section {
@@ -86,12 +114,36 @@ section .main {
     top: 5%;
 }
 
+/* Efek Underline */
 section .main h1 {
-    position: relative;
-    font-size: 55px;
-    top: 80px;
+    top: 70px;
     left: 25px;
+    font-size: 55px;
+    margin: 0;
+    color: inherit;
+    cursor: default;
+    text-decoration: none;
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
 }
+
+section .main h1::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #1e8957;
+    transition: width 0.3s ease-in-out;
+}
+
+section .main h1:hover::before {
+    width: 100%;
+}
+/* End */
 
 section .main h1 span {
     color: #1e8957;
@@ -102,7 +154,7 @@ section .main p {
     text-align: justify;
     line-height: 22px;
     position: relative;
-    top: 125px;
+    top: 20px;
     left: 25px;
 }
 
@@ -110,7 +162,8 @@ section .main .main_tag .main_btn {
     background: #1e8957;
     padding: 10px 20px;
     position: relative;
-    top: 200px;
+    top: 30px;
+    /* Adjusted top value */
     left: 25px;
     color: #fff;
     text-decoration: none;
@@ -119,7 +172,8 @@ section .main .main_tag .main_btn {
 section .main .main_img img {
     width: 780px;
     position: relative;
-    top: 90px;
+    top: 40px;
+    /* Adjusted top value */
     left: 20px;
 }
 
@@ -151,15 +205,19 @@ section .main .main_img img {
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 25px 0;
+    grid-gap: 0px 0px;
+    background: url('/static/FrameAbu2.png') center/cover;
+    border-radius: 10px;
+    border: 0.5px solid #2c2c2c;
 }
 
 .bukusss .bukusss_box .bukusss_card {
-    width: 60%;
+    width: 57%;
     text-align: center;
-    padding: 5px;
+    padding: 10px 0px 0px 10px;
+    background-color: rgb(175, 175, 175);
     /* border: 1px solid #919191; */
-    margin: auto 20px;
+    margin: auto 55px;
 }
 
 .bukusss .bukusss_box .bukusss_card:hover {
@@ -168,11 +226,12 @@ section .main .main_img img {
 
 .bukusss .bukusss_box .bukusss_card .bukusss_image {
     width: 150px;
-    height: 220px;
+    height: 225px;
     margin: 0 auto;
     cursor: pointer;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.5); */
     overflow: hidden;
+    border: 0.5px solid #2c2c2c;
 }
 
 .bukusss .bukusss_box .bukusss_card .bukusss_image img {
@@ -183,9 +242,9 @@ section .main .main_img img {
     transition: 0.3s;
 }
 
-.bukusss .bukusss_box .bukusss_card:hover .bukusss_image img {
+/* .bukusss .bukusss_box .bukusss_card:hover .bukusss_image img {
     transform: scale(1.1);
-}
+} */
 
 /* Collection Page */
 .koleksian {
@@ -353,7 +412,7 @@ section .main .main_img img {
     margin-top: 5px;
 }
 
-/* Page Detail Section Discover More Books */
+/* Page Detail Section - Discover More Books */
 .discover {
     width: 90%;
     height: 90vh;
@@ -404,7 +463,7 @@ section .main .main_img img {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #089da1;
+    background: #38d189;
     border-radius: 10px;
 }
 

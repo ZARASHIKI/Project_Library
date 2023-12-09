@@ -11,6 +11,9 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
 
     <!-- Font Awesome -->
     <link
@@ -56,11 +59,21 @@
       rel="stylesheet"
     />
   </head>
-  <script></script>
+  <script>
+    $(document).ready(function() {
+      $(".modal-button").click(function() {
+        $("#modal-ter").toggleClass("is-active");
+      });
+  
+      $(".delete, .modal-background, .modal-card-foot .button").click(function() {
+        $("#modal-ter").removeClass("is-active");
+      });
+    });
+  </script>
   <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">LOGO</a>
+        <a class="navbar-brand" href="/"><img src="static/Logo.png" alt=""></a>
         <button
           class="navbar-toggler"
           type="button"
@@ -77,9 +90,7 @@
           id="navbarSupportedContent"
         >
           <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
+
             <li class="nav-item active-collection">
               <a class="nav-link active" aria-current="page" href="/collection"
                 >Collections</a
@@ -95,29 +106,64 @@
         <form class="d-flex" style="margin-right: 10px">
           <i class="fa fa-search fa-lg" aria-hidden="true"></i>
         </form>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="42"
-          height="42"
-          viewBox="0 0 47 47"
-          fill="none"
-          style="margin: 0px 0px 0px 10px"
-        >
-          <path
-            d="M23.3333 0C10.4533 0 0 10.4533 0 23.3333C0 36.2133 10.4533 46.6667 23.3333 46.6667C36.2133 46.6667 46.6667 36.2133 46.6667 23.3333C46.6667 10.4533 36.2133 0 23.3333 0ZM23.3333 7C27.2067 7 30.3333 10.1267 30.3333 14C30.3333 17.8733 27.2067 21 23.3333 21C19.46 21 16.3333 17.8733 16.3333 14C16.3333 10.1267 19.46 7 23.3333 7ZM23.3333 40.1333C17.5 40.1333 12.3433 37.1467 9.33333 32.62C9.40333 27.9767 18.6667 25.4333 23.3333 25.4333C27.9767 25.4333 37.2633 27.9767 37.3333 32.62C34.3233 37.1467 29.1667 40.1333 23.3333 40.1333Z"
-            fill="#424242"
-          />
-        </svg>
+        <div class="dropdown">
+          <img src="static/profile/placeholder.svg" alt="" class="dropdown-toggle" data-bs-toggle="dropdown"
+            data-bs-display="static" aria-haspopup="true" aria-expanded="false" role="button">
+          <ul class="dropdown-menu dropdown-menu-end ">
+            <li><a class="dropdown-item" href="#">Log Out</a></li>
+          </ul>
+        </div>
       </div>
     </nav>
     <!-- Koleksian -->
-    <a class="add-koleksian" href="/tambah">TAMBAHKAN BUKU
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-      </svg>
-    </a>
+    
+    <div class="modal" id="modal-ter">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Tambahkan Buku</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+                    <div class="mb-3">
+                        <label for="judul" class="form-label">Judul Buku</label>
+                        <input type="text" class="form-control" id="judul" name="judul" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="penulis" class="form-label">Penulis</label>
+                        <input type="text" class="form-control" id="penulis" name="penulis" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="genre" class="form-label">Genre</label>
+                        <input type="text" class="form-control" id="genre" name="genre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cover" class="form-label">Cover Buku (File)</label>
+                        <input type="file" class="form-control" id="cover" name="cover" accept="image/*" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="link" class="form-label">Link</label>
+                        <input type="text" class="form-control" id="link" name="link" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deskripsi" class="form-label">Deskripsi</label>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required></textarea>
+                    </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-success">Save changes</button>
+          <button class="button">Cancel</button>
+          <button type="button" class="btn btn-dark">Clear</button>
+        </footer>
+      </div>
+    </div>
     <div class="koleksian">
-      <h1>Your Collections</h1>
+      <button class="button add-koleksian modal-button" data-target="modal-ter" aria-hashpopup="true" >TAMBAHKAN BUKU
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+        </svg>
+      </button>
+      <h1 style="font-weight: bold; font-size: x-large; justify-content: center; margin-bottom: 30px; margin-left:60px">Collections Book</h1>
       <div class="papan">
         <div class="koleksian_box">
           <!--  -->
@@ -154,5 +200,6 @@
         </div>
       </div>
     </div>
+  </div>
   </body>
 </html>

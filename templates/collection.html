@@ -117,7 +117,7 @@
         </div>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success">Save changes</button>
+        <button class="button is-success" onclick="tambahBuku()">Save changes</button>
         <button class="button" onclick='$("#modal-ter").removeClass("is-active")'>Cancel</button>
         <button type="button" class="btn btn-dark">Clear</button>
       </footer>
@@ -136,7 +136,7 @@
         </button>
       {% endif %}
     {% endif %}
-    
+
     <h1 style="font-weight: bold; font-size: x-large; justify-content: center; margin-bottom: 30px; margin-left:60px">
       Collections Book</h1>
     <div class="papan">
@@ -144,32 +144,7 @@
         <!--  -->
         <div class="koleksian_card">
           <div class="koleksian_image">
-            <img src="/static/IMG_0458.jpg" />
-          </div>
-        </div>
-        <div class="koleksian_card">
-          <div class="koleksian_image">
-            <img src="/static/IMG_0458.jpg" />
-          </div>
-        </div>
-        <div class="koleksian_card">
-          <div class="koleksian_image">
-            <img src="/static/IMG_0458.jpg" />
-          </div>
-        </div>
-        <div class="koleksian_card">
-          <div class="koleksian_image">
-            <img src="/static/IMG_0458.jpg" />
-          </div>
-        </div>
-        <div class="koleksian_card">
-          <div class="koleksian_image">
-            <img src="/static/IMG_0458.jpg" />
-          </div>
-        </div>
-        <div class="koleksian_card">
-          <div class="koleksian_image">
-            <img src="/static/IMG_0458.jpg" />
+            <a href="/detail/{{books.Judul}}"><img src="/static/{{books.Cover}}"/></a>
           </div>
         </div>
       </div>

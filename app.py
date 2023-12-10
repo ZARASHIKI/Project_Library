@@ -32,11 +32,17 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         user_info = db.user.find_one({"username": payload["id"]})
-        return render_template('index.html', user_info=user_info)    
+        collection = db.books_collection.find({},{'_id':False})
+        for buku in collection:
+            return render_template('index.html', user_info=user_info,books=buku)    
     except jwt.ExpiredSignatureError:
-        return render_template('index.html')    
+        collection = db.books_collection.find({},{'_id':False})
+        for buku in collection:
+            return render_template('index.html',books=buku)    
     except jwt.exceptions.DecodeError:
-        return render_template('index.html')    
+        collection = db.books_collection.find({},{'_id':False})
+        for buku in collection:
+            return render_template('index.html',books=buku)    
 
 @app.route("/login")
 def login():
@@ -88,15 +94,32 @@ def collection():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         user_info = db.user.find_one({"username": payload["id"]},{'_id': False})
-        return render_template('collection.html', user_info=user_info)    
+        collection = db.books_collection.find({},{'_id':False})
+        for buku in collection:
+            return render_template('collection.html', user_info=user_info,books=buku)    
     except jwt.ExpiredSignatureError:
-        return render_template('collection.html')    
+        collection = db.books_collection.find({},{'_id':False})
+        for buku in collection:
+            return render_template('collection.html',books=buku)    
     except jwt.exceptions.DecodeError:
-        return render_template('collection.html')    
+        collection = db.books_collection.find({},{'_id':False})
+        for buku in collection:
+            return render_template('collection.html',books=buku)    
     
-@app.route('/detail', methods=['GET'])
-def detail():
-    return render_template('detail.html')
+@app.route('/detail/<keyword>', methods=['GET'])
+def detail(keyword):
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+        user_info = db.user.find_one({"username": payload["id"]},{'_id': False})
+        books_collection = db.books_collection.find_one({'Judul':keyword},{'_id':False})
+        return render_template('detail.html',buku_detail=books_collection,user_info=user_info)
+    except jwt.ExpiredSignatureError:
+        books_collection = db.books_collection.find_one({'Judul':keyword},{'_id':False})
+        return render_template('detail.html',buku_detail=books_collection)
+    except jwt.exceptions.DecodeError:
+        books_collection = db.books_collection.find_one({'Judul':keyword},{'_id':False})
+        return render_template('detail.html',buku_detail=books_collection)
 
 @app.route('/bookmark', methods=['GET'])
 def bookmark():
@@ -109,7 +132,30 @@ def bookmark():
         return redirect(url_for("login", msg="You Need To Login First"))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="You Need To Login First"))
-   
+
+@app.route("/tambah_buku/save", methods=["POST"])
+def tambahBuku():
+    judul_recieve = request.form['judul_give']
+    penulis_recieve = request.form['penulis_give']
+    genre_recieve = request.form['genre_give']
+    link_recieve = request.form['link_give']
+    deskirpsi_recieve = request.form['deskripsi_give']
+    if "cover_give" in request.files:
+        file = request.files["cover_give"]
+        filename = secure_filename(file.filename)
+        extension = filename.split(".")[-1]
+        file_path = f"cover/{judul_recieve}.{extension}"
+        file.save("./static/" + file_path)
+    doc = {
+        "Judul":judul_recieve,
+        "Penulis":penulis_recieve,
+        "Genre":genre_recieve,
+        "Link":link_recieve,
+        "Cover":file_path,
+        "Deskripsi":deskirpsi_recieve
+    }
+    db.books_collection.insert_one(doc)
+    return jsonify({'result': 'success','msg':'Book Added'})
    
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)

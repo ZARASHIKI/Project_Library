@@ -35,6 +35,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
   <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" />
+  <script src='{{ url_for("static", filename="index.js") }}'></script>
 </head>
 <script></script>
 
@@ -51,26 +52,36 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/collection">Collections</a>
           </li>
-          <li class="nav-item active-bookmark">
+          <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/bookmark">Bookmarks</a>
           </li>
         </ul>
       </div>
-      <form class="d-flex" style="margin-right: 10px">
+      <form class="d-flex" style="margin-right: 10px;">
         <i class="fa fa-search fa-lg" aria-hidden="true"></i>
       </form>
+      <div id="user_log">
+      </div>
+      {% if user_info %}
       <div class="dropdown">
         <img src="static/profile/placeholder.svg" alt="" class="dropdown-toggle" data-bs-toggle="dropdown"
           data-bs-display="static" aria-haspopup="true" aria-expanded="false" role="button">
         <ul class="dropdown-menu dropdown-menu-end ">
-          <li><a class="dropdown-item" href="#">Log Out</a></li>
+          <li><a class="dropdown-item" href="#">{{user_info.username}}</a></li>
+          <li><a class="dropdown-item" onclick="logout()">Log Out</a></li>
         </ul>
       </div>
+      {% else %}
+      <a href="/login" role="navigation" class="login-text">
+        <div>Log In / Register</div>
+      </a>
+      {% endif %}
     </div>
   </nav>
   <!-- Koleksian -->
   <div class="koleksian">
-    <h1 style="font-weight: bold; font-size: x-large; justify-content: center; margin-bottom: 30px; margin-left:60px">Your Bookmarks</h1>
+    <h1 style="font-weight: bold; font-size: x-large; justify-content: center; margin-bottom: 30px; margin-left:60px">
+      Your Bookmarks</h1>
     <div class="papan">
       <div class="koleksian_box">
         <!--  -->

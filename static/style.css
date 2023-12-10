@@ -210,20 +210,22 @@ section .main .main_img img {
     min-height: 85%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 5px;
+    grid-column: -1/-1;
+    grid-template-columns: repeat(3, 6fr);
     background: url('/static/FrameAbu2.png') center/cover;
     border-radius: 10px;
     border: 0.5px solid #2c2c2c;
 }
 
 .bukusss .bukusss_box .bukusss_card {
-    width: 57%;
-    text-align: center;
-    padding: 10px 0px 0px 10px;
-    background-color: rgb(175, 175, 175);
-    /* border: 1px solid #919191; */
-    margin: auto ;
+    margin-top: 100px;
+    margin-left: 90px;
+    max-width: 50%;
+    max-height: 53%;
+    -webkit-box-shadow: 13px 13px 8px 0px rgba(151, 146, 153,0.6);
+    -moz-box-shadow: 13px 13px 8px 0px rgba(151, 146, 153,0.6);
+    box-shadow: 13px 13px 8px 0px rgba(151, 146, 153,0.6);
+
 }
 
 .bukusss .bukusss_box .bukusss_card:hover {
@@ -237,6 +239,9 @@ section .main .main_img img {
     cursor: pointer;
     /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.5); */
     overflow: hidden;
+    -webkit-box-shadow: 13px 13px 8px 0px rgba(151, 146, 153,0.6);
+    -moz-box-shadow: 13px 13px 8px 0px rgba(151, 146, 153,0.6);
+    box-shadow: 13px 13px 8px 0px rgba(151, 146, 153,0.6);
     border: 0.5px solid #2c2c2c;
 }
 
@@ -529,4 +534,7 @@ section .main .main_img img {
 .dropdown-menu.show {
     opacity: 1;
     visibility: visible;
+}
+.login-text{
+    color: black;
 }

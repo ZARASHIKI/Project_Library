@@ -226,13 +226,19 @@ section .main .main_img img {
     max-height: 53%;
 }
 
-
+@media (max-width: 768px) {
+    .bukusss .bukusss_box .bukusss_card {
+        margin-top: 10%; /* Adjust margin for smaller screens */
+        margin-left: 5%; /* Adjust margin for smaller screens */
+        max-width: 95%; /* Adjust max-width for smaller screens */
+        max-height: none; /* Remove max-height for smaller screens */
+    }
+}
 
 .bukusss .bukusss_box .bukusss_card .bukusss_image {
     width: 150px;
     height: 225px;
     margin: 0 auto;
-    /* box-shadow: 0 0 8px rgba(0, 0, 0, 0.5); */
     overflow: hidden;
     -webkit-box-shadow: 13px 13px 8px 0px rgba(151, 146, 153, 0.6);
     -moz-box-shadow: 13px 13px 8px 0px rgba(151, 146, 153, 0.6);

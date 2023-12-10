@@ -90,9 +90,9 @@ def collection():
         user_info = db.user.find_one({"username": payload["id"]},{'_id': False})
         return render_template('collection.html', user_info=user_info)    
     except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="You Need To Login First"))
+        return render_template('collection.html')    
     except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="You Need To Login First"))
+        return render_template('collection.html')    
     
 @app.route('/detail', methods=['GET'])
 def detail():

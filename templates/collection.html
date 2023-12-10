@@ -39,23 +39,7 @@
   <script src='{{ url_for("static", filename="index.js") }}'></script>
 
 </head>
-<script>
-  $(document).ready(function () {
-    let user = '{{user_info.status}}'
-    
-    if (user) {
-      admin(user);
-    }
-});
-function admin(user){
-  if(user === 'admin'){
-    $('#tambabuku').show();
-  }
-  if(user === 'pengunjung'){
-    $('#tambabuku').hide();
-  }
-  }
-</script>
+
 
 <body>
   <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -140,14 +124,19 @@ function admin(user){
     </div>
   </div>
   <div class="koleksian" >
-    <button class="button add-koleksian modal-button" id="tambabuku" style="display: none;" onclick='$("#modal-ter").addClass("is-active")'
-      aria-hashpopup="true">TAMBAHKAN BUKU
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
-        viewBox="0 0 16 16">
-        <path
-          d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-      </svg>
-    </button>
+    {% if user_info %}
+      {% if user_info.status == 'admin'%}
+        <button class="button add-koleksian modal-button" id="tambabuku"  onclick='$("#modal-ter").addClass("is-active")'
+          aria-hashpopup="true">TAMBAHKAN BUKU
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
+            viewBox="0 0 16 16">
+            <path
+              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+          </svg>
+        </button>
+      {% endif %}
+    {% endif %}
+    
     <h1 style="font-weight: bold; font-size: x-large; justify-content: center; margin-bottom: 30px; margin-left:60px">
       Collections Book</h1>
     <div class="papan">

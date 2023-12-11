@@ -215,15 +215,15 @@ section .main .main_img img {
 
 .bukusss .bukusss_box .bukusss_card {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-auto-flow: column;
-    /* Set the flow to column */
+    grid-template-columns: repeat(3, 1fr); /* Tiga kolom */
+    grid-template-rows: auto; /* Set tinggi baris otomatis */
+    grid-auto-flow: row; /* Set arah grid menjadi row */
     grid-gap: 20px;
-    overflow-x: auto;
+    grid-row-gap: 200px; 
     margin-top: 100px;
     margin-left: 90px;
-    max-width: 50%;
-    max-height: 53%;
+    max-width: 80%;
+    max-height: 70%;
 }
 
 @media (max-width: 768px) {
@@ -594,3 +594,12 @@ section .main .main_img img {
     color:black;
     margin-left: 25px;
 }
+.image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  h3{
+    margin-left: 25px;
+    margin-bottom: 5px;
+  }

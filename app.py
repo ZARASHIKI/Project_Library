@@ -33,8 +33,8 @@ def home():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         user_info = db.user.find_one({"username": payload["id"]})
         collection = db.books_collection.find({},{'_id':False})
-        for buku in collection:
-            return render_template('index.html', user_info=user_info,books=buku)    
+        list_buku=list(collection)
+        return render_template('index.html', user_info=user_info,books=list_buku)    
     except jwt.ExpiredSignatureError:
         collection = db.books_collection.find({},{'_id':False})
         for buku in collection:
@@ -74,7 +74,7 @@ def sign_up():
         "profile_name": username_receive,
         "status":"pengunjung",                                                    
         "profile_pic": "", 
-        "profile_pic_real": "profile/placeholder.png", 
+        "profile_pic_real": "profile/placeholder.svg", 
         "profile_info": ""
     }
     db.user.insert_one(doc)
@@ -95,13 +95,9 @@ def collection():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         user_info = db.user.find_one({"username": payload["id"]},{'_id': False})
         collection = db.books_collection.find({},{'_id':False})
-        for buku in collection:
-            return render_template('collection.html', user_info=user_info,books=buku)    
-    except jwt.ExpiredSignatureError:
-        collection = db.books_collection.find({},{'_id':False})
-        for buku in collection:
-            return render_template('collection.html',books=buku)    
-    except jwt.exceptions.DecodeError:
+        list_buku=list(collection)
+        return render_template('collection.html', user_info=user_info,books=list_buku)    
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         collection = db.books_collection.find({},{'_id':False})
         for buku in collection:
             return render_template('collection.html',books=buku)    
@@ -112,15 +108,69 @@ def detail(keyword):
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         user_info = db.user.find_one({"username": payload["id"]},{'_id': False})
-        books_collection = db.books_collection.find_one({'Judul':keyword},{'_id':False})
+        books_collection = db.books_collection.find_one({'Judul':keyword})
         return render_template('detail.html',buku_detail=books_collection,user_info=user_info)
-    except jwt.ExpiredSignatureError:
-        books_collection = db.books_collection.find_one({'Judul':keyword},{'_id':False})
-        return render_template('detail.html',buku_detail=books_collection)
-    except jwt.exceptions.DecodeError:
-        books_collection = db.books_collection.find_one({'Judul':keyword},{'_id':False})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        books_collection = db.books_collection.find_one({'Judul':keyword})
         return render_template('detail.html',buku_detail=books_collection)
 
+@app.route('/bookmark/add', methods=['POST'])
+def bookmarkadd():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+        user_info = db.user.find_one({"username": payload["id"]})
+        cover_receive = request.form["cover_give"]
+        detail_receive = request.form["detail_give"]
+        action_receive = request.form["action_give"]
+        type_receive = request.form["type_give"]
+        id_receive = request.form["id_give"]
+
+        doc = {
+            "bookmark_id":id_receive,
+            "type":type_receive,
+            "cover": cover_receive,
+            "username":user_info['profile_name'],
+            "detail": detail_receive,
+        }
+        if action_receive == "Bookmark":
+            db.bookmark.insert_one(doc)
+        else:
+            db.bookmark.delete_one(doc)
+        # count = db.bookmark.count_documents(
+        #     {"username": user_info['username']}
+        # )
+        return jsonify({"result": "success"})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("login"))
+
+@app.route('/bookmark/get', methods=['GET'])
+def bookmarkget():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+        username_receive = request.args.get("username_give")
+        if username_receive == "":
+            bookmark_get = "No Have Bookmark"
+        else:
+            bookmark_get = list(db.bookmark.find({"username":username_receive}))
+
+        for bookmark in bookmark_get:
+            bookmark["_id"] = str(bookmark["_id"])
+            bookmark["bookmark_me"] = bool(
+                db.bookmark.find_one(
+                    {"bookmark_id": bookmark["bookmark_id"], "type": "bookmark", "username": payload["id"]}
+                )
+            )
+            return jsonify({
+                    "result": "success",
+                    "msg": "Successful fetched all posts",
+                    "bookmark": bookmark_get,
+                })
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("login", msg="You Need To Login First"))
+
+    
 @app.route('/bookmark', methods=['GET'])
 def bookmark():
     token_receive = request.cookies.get("mytoken")
@@ -157,10 +207,37 @@ def tambahBuku():
     db.books_collection.insert_one(doc)
     return jsonify({'result': 'success','msg':'Book Added'})
    
+@app.route("/update_profile", methods=["POST"])
+def update_profile():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+        username = payload["id"]
+        name_receive = request.form["name_give"]
+        new_doc = {"profile_name": name_receive,}
+        if "file_give" in request.files:
+            file = request.files["file_give"]
+            filename = secure_filename(file.filename)
+            extension = filename.split(".")[-1]
+            file_path = f"profile/{username}.{extension}"
+            file.save("./static/" + file_path)
+            new_doc["profile_pic"] = filename
+            new_doc["profile_pic_real"] = file_path
+        db.user.update_one({"username": payload["id"]}, {"$set": new_doc})
+        return jsonify({"result": "success", "msg": "Profile updated!"})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("login", msg="You Need To Login First"))
 
 @app.route("/profile", methods=["GET"])
 def profilePage():
-    return render_template('profile.html')
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+        user_info = db.user.find_one({"username": payload["id"]},{'_id': False})
+        count = db.bookmark.count_documents({"username": user_info['profile_name']})
+        return render_template('profile.html',user_info=user_info,count=count)
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("login", msg="You Need To Login First"))
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)

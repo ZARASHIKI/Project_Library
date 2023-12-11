@@ -60,17 +60,17 @@
         </ul>
       </div>
       <form class="d-flex" style="margin-right: 10px;">
-        <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+        <!-- <i class="fa fa-search fa-lg" aria-hidden="true"></i> -->
       </form>
       <div id="user_log">
 
       </div>
       {% if user_info %}
-      <div class="dropdown">
-        <img src="{{ url_for('static', filename='profile/placeholder.svg') }}" alt="" class="dropdown-toggle" data-bs-toggle="dropdown"
+      <div class="dropdown image is-48x48">
+        <img  src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt="" class="dropdown-toggle is-rounded" data-bs-toggle="dropdown"
           data-bs-display="static" aria-haspopup="true" aria-expanded="false" role="button">
         <ul class="dropdown-menu dropdown-menu-end ">
-          <li><a class="dropdown-item" href="#">{{user_info.username}}</a></li>
+          <li><a class="dropdown-item" href="/profile">{{user_info.username}}</a></li>
           <li><a class="dropdown-item" onclick="logout()">Log Out</a></li>
         </ul>
       </div>
@@ -81,12 +81,37 @@
   </nav>
   <div class="profile-container">
     <div class="profile-box">
-        <img src="/static/IMG_0458.jpg" alt="Profile Picture" class="profile-image">
+        <img src="/static/{{user_info.profile_pic_real}}" alt="Profile Picture" class="profile-image">
         <div class="profile-info">
-            <div class="profile-name">Ahnaf B</div>
-            <a href="#" class="edit-profile-icon"><i class="fa fa-edit"></i> Edit Profile</a>
-            <div class="bookmark-count">Bookmarks: 25</div>
+          <a href="#" class="edit-profile-icon modal-button"  onclick='$("#modal-ter").addClass("is-active")'><i class="fa fa-edit"></i> Edit Profile</a>
+            <div class="profile-name">Name: {{user_info.profile_name}}</div>
+            <h3>Username: {{user_info.username}}</h3>
+            <div class="bookmark-count">Bookmarks Books: {{count}}</div>
         </div>
+    </div>
+  </div>
+  <div class="modal" id="modal-ter">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Edit Profile</p>
+        <button class="delete" aria-label="close" onclick='$("#modal-ter").removeClass("is-active")'></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="mb-3">
+          <label for="username" class="form-label">Profie Name</label>
+          <input type="text" class="form-control" id="profile_name" name="username" required>
+        </div>
+        <div class="mb-3">
+          <label for="cover" class="form-label">Upload Foto Profile</label>
+          <input type="file" class="form-control" id="foto" name="foto" accept="image/*" required>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" onclick="editprofile()">Save changes</button>
+        <button class="button" onclick='$("#modal-ter").removeClass("is-active")'>Cancel</button>
+        <button type="button" class="btn btn-dark">Clear</button>
+      </footer>
     </div>
   </div>
 </body>

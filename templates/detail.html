@@ -39,7 +39,11 @@
   <script src='{{ url_for("static", filename="index.js") }}'></script>
 
 </head>
-<script></script>
+<script>
+  $(document).ready(function () {
+  getbookmark("{{user_info.username}}")
+});
+</script>
 
 <body>
   <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -60,17 +64,17 @@
         </ul>
       </div>
       <form class="d-flex" style="margin-right: 10px;">
-        <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+        <!-- <i class="fa fa-search fa-lg" aria-hidden="true"></i> -->
       </form>
       <div id="user_log">
 
       </div>
       {% if user_info %}
-      <div class="dropdown">
-        <img src="{{ url_for('static', filename='profile/placeholder.svg') }}" alt="" class="dropdown-toggle" data-bs-toggle="dropdown"
+      <div class="dropdown image is-48x48">
+        <img  src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt="" class="dropdown-toggle is-rounded" data-bs-toggle="dropdown"
           data-bs-display="static" aria-haspopup="true" aria-expanded="false" role="button">
         <ul class="dropdown-menu dropdown-menu-end ">
-          <li><a class="dropdown-item" href="#">{{user_info.username}}</a></li>
+          <li><a class="dropdown-item" href="/profile">{{user_info.username}}</a></li>
           <li><a class="dropdown-item" onclick="logout()">Log Out</a></li>
         </ul>
       </div>
@@ -92,8 +96,8 @@
           <p><a>Genre</a>: {{buku_detail.Genre}}</p>
           <p>{{buku_detail.Deskripsi}}</p>
           <a href="{{buku_detail.Link}}" target="_blank"><button class="btn btn-info read-more-btn">Read More</button></a>
-          <button class="btn btn-warning bookmark-btn"><i class="fa fa-solid fa-bookmark"
-              style="font-size: 21px;"></i></button>
+         
+          <a class="btn btn-warning bookmark-btn" id="bookmarkicon"  onclick="bookmark('{{buku_detail._id}}','bookmark','{{buku_detail.Cover}}','/detail/{{buku_detail.Judul}}')" aria-label="bookmark"><i class="fa fa-regular fa-bookmark"style="font-size: 21px;"></i></a>
           {% if user_info %}
             {% if user_info.status == 'admin'%}
                 <div class="edit-delete-container">

@@ -62,17 +62,17 @@
           </ul>
         </div>
         <form class="d-flex" style="margin-right: 10px;">
-          <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+          <!-- <i class="fa fa-search fa-lg" aria-hidden="true"></i> -->
         </form>
         <div id="user_log">
 
         </div>
         {% if user_info %}
-        <div class="dropdown">
-          <img src="static/profile/placeholder.svg" alt="" class="dropdown-toggle" data-bs-toggle="dropdown"
+        <div class="dropdown image is-48x48">
+          <img  src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt="" class="dropdown-toggle is-rounded" data-bs-toggle="dropdown"
             data-bs-display="static" aria-haspopup="true" aria-expanded="false" role="button">
           <ul class="dropdown-menu dropdown-menu-end ">
-            <li><a class="dropdown-item" href="#">{{user_info.username}}</a></li>
+            <li><a class="dropdown-item" href="/profile">{{user_info.username}}</a></li>
             <li><a class="dropdown-item" onclick="logout()">Log Out</a></li>
           </ul>
         </div>
@@ -98,9 +98,13 @@
       Popular Books</h1 >
     <div class="bukusss_box container text-center">
       <div class="bukusss_card">
+        {% for buku in books %}
+        {% set Cover = buku.Cover %}
+        {% set Judul = buku.Judul %}
         <div class="bukusss_image">
-          <a href="/detail/{{books.Judul}}"><img src="/static/{{books.Cover}}"/></a>
+          <a href="/detail/{{Judul}}"><img src="/static/{{Cover}}"/></a>
         </div>
+        {% endfor %}
       </div>
     </div>
   </div>

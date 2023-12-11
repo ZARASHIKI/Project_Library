@@ -36,6 +36,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
   <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" />
   <script src='{{ url_for("static", filename="index.js") }}'></script>
+  <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon" />
 </head>
 <script>
   $(document).ready(function () {
@@ -85,11 +86,8 @@
     <h1 style="font-weight: bold; font-size: x-large; justify-content: center; margin-bottom: 30px; margin-left:60px">
       Your Bookmarks</h1>
     <div class="papan">
-      <div class="koleksian_box">
-        <!--  -->
-        <div class="koleksian_card" id="bookmarkcard">
+      <div class="bookmark_box" id="bookmarkcard">
           
-        </div>        
       </div>
     </div>
   </div>

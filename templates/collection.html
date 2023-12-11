@@ -37,8 +37,32 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
   <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" />
   <script src='{{ url_for("static", filename="index.js") }}'></script>
+  <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}" type="image/x-icon" />
+
 
 </head>
+<script>
+  let currentPage = 1;
+  $(document).ready(function () {
+      loadPage(currentPage);
+
+      $("#prev-page").click(function () {
+          if (currentPage > 1) {
+              currentPage--;
+              loadPage(currentPage);
+          }
+      });
+
+      $("#next-page").click(function () {
+          let totalPages = 2;
+          if (currentPage < totalPages) {
+              currentPage++;
+              loadPage(currentPage);
+          }
+      });
+  });
+
+</script>
 
 
 <body>
@@ -151,6 +175,27 @@
         {% endfor %}
       </div>
     </div>
+    <nav class="Page navigation example">
+      <ul class="pagination justify-content-center mt-4 mr-6">
+        {% if current_page > 1 %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('collection', page=current_page-1) }}">Previous</a>
+          </li>
+        {% endif %}
+    
+        {% for page_num in range(1, total_pages+1) %}
+          <li class="page-item {% if page_num == current_page %}active{% endif %}">
+            <a class="page-link" href="{{ url_for('collection', page=page_num) }}">{{ page_num }}</a>
+          </li>
+        {% endfor %}
+    
+        {% if current_page < total_pages %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('collection', page=current_page+1) }}">Next</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
   </div>
   </div>
 </body>

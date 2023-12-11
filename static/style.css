@@ -313,8 +313,27 @@ section .main .main_img img {
     min-height: 85%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /* grid-gap: 5px 0; */
-    /* justify-content: center; */
+    grid-template-rows: repeat(2, 1fr);
+    overflow-x: auto;
+}
+
+.koleksian .bookmark_box {
+    width: 80%;
+    height: 600px; /* Set a fixed height for the container */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-auto-flow: row;
+    overflow-x: auto;
+}
+
+
+.koleksian .bookmark_box .koleksian_card {
+    width: 60%;
+    text-align: center;
+    padding: 5px;
+    /* border: 1px solid #919191; */
+    margin: auto 20px;
 }
 
 .koleksian .koleksian_box .koleksian_card {
@@ -323,6 +342,15 @@ section .main .main_img img {
     padding: 5px;
     /* border: 1px solid #919191; */
     margin: auto 20px;
+}
+
+.koleksian .bookmark_box .koleksian_image {
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    margin-bottom: 5px;
 }
 
 .koleksian .koleksian_box .koleksian_image {
@@ -334,12 +362,24 @@ section .main .main_img img {
     margin-bottom: 5px;
 }
 
+.koleksian .bookmark_box .koleksian_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: 0.3s;
+}
+
 .koleksian .koleksian_box .koleksian_image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
     transition: 0.3s;
+}
+
+.koleksian .bookmark_box .koleksian_image:hover img {
+    transform: scale(1.1);
 }
 
 .koleksian .koleksian_box .koleksian_image:hover img {
@@ -441,7 +481,7 @@ section .main .main_img img {
 
 .discover .discover-book-box {
     width: 100%;
-    height: 60vh;
+    height: 40vh;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -450,19 +490,19 @@ section .main .main_img img {
 }
 
 .discover .discover-book-box .discover-book-card {
-    width: 250px;
-    height: 330px;
+    width:  180px;
+    height: 250px;
     text-align: center;
     padding: 5px;
     margin: auto 20px;
 }
 
 .discover .discover-book-box .discover-book-card:hover {
-    box-shadow: 0 0 5px #089da1;
+   cursor: pointer;
 }
 
-.discover .discover-book-box .discover-book-card .discover-book-img img {
-    width: 150px;
+.discover .discover-book-box .discover-book-card img {
+    width: fit-content;
 }
 
 ::-webkit-scrollbar {

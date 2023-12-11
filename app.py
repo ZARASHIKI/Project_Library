@@ -1,3 +1,4 @@
+import math
 from dotenv import load_dotenv
 import os
 from os.path import join, dirname
@@ -32,7 +33,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         user_info = db.user.find_one({"username": payload["id"]})
-        collection = db.books_collection.find({},{'_id':False})
+        collection = db.books_collection.find({},{'_id':False}).limit(9)
         list_buku=list(collection)
         return render_template('index.html', user_info=user_info,books=list_buku)    
     except jwt.ExpiredSignatureError:
@@ -92,11 +93,15 @@ def check_dup():
 def collection():
     token_receive = request.cookies.get("mytoken")
     try:
+        page = request.args.get('page', default=1, type=int)
+        per_page = 6
+        offset = (page - 1) * per_page
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         user_info = db.user.find_one({"username": payload["id"]},{'_id': False})
-        collection = db.books_collection.find({},{'_id':False})
-        list_buku=list(collection)
-        return render_template('collection.html', user_info=user_info,books=list_buku)    
+        total_books = db.books_collection.count_documents({})
+        total_pages = math.ceil(total_books / per_page)
+        collection = list(db.books_collection.find({},{'_id':False}).skip(offset).limit(per_page))
+        return render_template('collection.html', user_info=user_info,books=collection,current_page=page,total_pages=total_pages)    
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         collection = db.books_collection.find({},{'_id':False})
         for buku in collection:
@@ -109,7 +114,11 @@ def detail(keyword):
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         user_info = db.user.find_one({"username": payload["id"]},{'_id': False})
         books_collection = db.books_collection.find_one({'Judul':keyword})
-        return render_template('detail.html',buku_detail=books_collection,user_info=user_info)
+        if 'Genre' in books_collection:
+            genre_to_search = books_collection['Genre']
+            print(genre_to_search)
+            discovery = db.books_collection.find({"Genre": {"$all":genre_to_search}})
+            return render_template('detail.html',buku_detail=books_collection,user_info=user_info,discovery=discovery)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         books_collection = db.books_collection.find_one({'Judul':keyword})
         return render_template('detail.html',buku_detail=books_collection)
@@ -125,21 +134,29 @@ def bookmarkadd():
         action_receive = request.form["action_give"]
         type_receive = request.form["type_give"]
         id_receive = request.form["id_give"]
-
-        doc = {
-            "bookmark_id":id_receive,
-            "type":type_receive,
-            "cover": cover_receive,
-            "username":user_info['profile_name'],
-            "detail": detail_receive,
-        }
-        if action_receive == "Bookmark":
-            db.bookmark.insert_one(doc)
-        else:
+        judul_receive = request.form["judul_give"]
+        cek_dup = db.bookmark.find_one({"judul":judul_receive})
+        if cek_dup:
+            doc = {
+                "bookmark_id":id_receive,
+                "type":type_receive,
+                "cover": cover_receive,
+                "username":user_info['profile_name'],
+                "detail": detail_receive,
+                "judul":judul_receive
+            }
             db.bookmark.delete_one(doc)
-        # count = db.bookmark.count_documents(
-        #     {"username": user_info['username']}
-        # )
+        else:
+            doc = {
+                "bookmark_id":id_receive,
+                "type":type_receive,
+                "cover": cover_receive,
+                "username":user_info['profile_name'],
+                "detail": detail_receive,
+                "judul":judul_receive
+            }
+            db.bookmark.insert_one(doc)
+
         return jsonify({"result": "success"})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("login"))
@@ -162,11 +179,8 @@ def bookmarkget():
                     {"bookmark_id": bookmark["bookmark_id"], "type": "bookmark", "username": payload["id"]}
                 )
             )
-            return jsonify({
-                    "result": "success",
-                    "msg": "Successful fetched all posts",
-                    "bookmark": bookmark_get,
-                })
+            print(bookmark)
+        return jsonify({"result": "success","msg": "Successful fetched all posts","bookmark": bookmark_get,})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("login", msg="You Need To Login First"))
 
@@ -188,6 +202,7 @@ def tambahBuku():
     judul_recieve = request.form['judul_give']
     penulis_recieve = request.form['penulis_give']
     genre_recieve = request.form['genre_give']
+    genres = [genre.strip() for genre in genre_recieve.split(',')]
     link_recieve = request.form['link_give']
     deskirpsi_recieve = request.form['deskripsi_give']
     if "cover_give" in request.files:
@@ -199,13 +214,52 @@ def tambahBuku():
     doc = {
         "Judul":judul_recieve,
         "Penulis":penulis_recieve,
-        "Genre":genre_recieve,
+        "Genre":genres,
         "Link":link_recieve,
         "Cover":file_path,
         "Deskripsi":deskirpsi_recieve
     }
     db.books_collection.insert_one(doc)
     return jsonify({'result': 'success','msg':'Book Added'})
+
+@app.route("/Edit_buku/save", methods=["POST"])
+def Edit_buku():
+    judul_recieve = request.form['judul_give']
+    penulis_recieve = request.form['penulis_give']
+    genre_recieve = request.form['genre_give']
+    genres = [genre.strip() for genre in genre_recieve.split(',')]
+    link_recieve = request.form['link_give']
+    deskirpsi_recieve = request.form['deskripsi_give']
+    if "cover_give" in request.files:
+        file = request.files["cover_give"]
+        filename = secure_filename(file.filename)
+        extension = filename.split(".")[-1]
+        file_path = f"cover/{judul_recieve}.{extension}"
+        file.save("./static/" + file_path)
+    doc = {
+        "Judul":judul_recieve,
+        "Penulis":penulis_recieve,
+        "Genre":genres,
+        "Link":link_recieve,
+        "Cover":file_path,
+        "Deskripsi":deskirpsi_recieve
+    }
+    db.books_collection.update_one({'Judul':judul_recieve},{"$set":doc})
+    return jsonify({'result': 'success','msg':'Book Updated'})
+    
+@app.route("/delete_buku/save", methods=["POST"])
+def delete_buku():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+        user_info = db.user.find_one({"username": payload["id"]})
+        judul_receive = request.form['judul_give']
+        db.bookmark.delete_many({"username":user_info['profile_name']})
+        db.books_collection.delete_one({'Judul':judul_receive})
+        return jsonify({'result': 'success','msg':'Book Deleted'})    
+    except (jwt.ExpiredSignatureError,jwt.exceptions.DecodeError):
+        return redirect(url_for("login", msg="You Need To Login First"))
+    
    
 @app.route("/update_profile", methods=["POST"])
 def update_profile():

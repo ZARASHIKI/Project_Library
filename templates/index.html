@@ -5,6 +5,9 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="The Library" />
+  <meta property="og:description" content="Sebuah Tempat Anda Untuk Mencari Bahan Bacaan" />
+  <meta property="og:image" content="{{url_for('static', filename='Logo.npg')}}" />
   <title>The - Library</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
@@ -70,15 +73,18 @@
         </div>
         {% if user_info %}
         <div class="dropdown image is-48x48">
-          <img  src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt="" class="dropdown-toggle is-rounded" data-bs-toggle="dropdown"
-            data-bs-display="static" aria-haspopup="true" aria-expanded="false" role="button">
+          <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt=""
+            class="dropdown-toggle is-rounded" data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true"
+            aria-expanded="false" role="button">
           <ul class="dropdown-menu dropdown-menu-end ">
             <li><a class="dropdown-item" href="/profile">{{user_info.username}}</a></li>
             <li><a class="dropdown-item" onclick="logout()">Log Out</a></li>
           </ul>
         </div>
         {% else %}
-        <a href="/login" role="navigation" class="login-text"><div>Log In / Register</div></a>
+        <a href="/login" role="navigation" class="login-text">
+          <div>Log In / Register</div>
+        </a>
         {% endif %}
       </div>
     </nav>
@@ -96,14 +102,14 @@
   <!-- Kumpulan Bukunya -->
   <div class="bukusss">
     <h1 style="display: flex; font-weight: bold; font-size: x-large; justify-content: center; margin-bottom: 30px;">
-      Popular Books</h1 >
+      Popular Books</h1>
     <div class="bukusss_box container text-center">
       <div class="bukusss_card">
         {% for buku in books %}
         {% set Cover = buku.Cover %}
         {% set Judul = buku.Judul %}
         <div class="bukusss_image">
-          <a href="/detail/{{Judul}}"><img src="/static/{{Cover}}"/></a>
+          <a href="/detail/{{Judul}}"><img src="/static/{{Cover}}" /></a>
         </div>
         {% endfor %}
       </div>

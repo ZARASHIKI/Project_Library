@@ -43,7 +43,13 @@
 </head>
 <script>
   $(document).ready(function () {
-  getbookmark("{{user_info.username}}","{{buku_detail.Judul}}")
+    let user_info = '{{user_info}}'
+  if (user_info == 'undefined' && user_info == null && user_info == '') {
+    console.log('KOSONG')
+  }
+  else{
+      getbookmark("{{user_info.profile_name}}", "{{buku_detail.Judul}}");
+  }
 });
 </script>
 
@@ -73,15 +79,18 @@
       </div>
       {% if user_info %}
       <div class="dropdown image is-48x48">
-        <img  src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt="" class="dropdown-toggle is-rounded" data-bs-toggle="dropdown"
-          data-bs-display="static" aria-haspopup="true" aria-expanded="false" role="button">
+        <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt=""
+          class="dropdown-toggle is-rounded" data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true"
+          aria-expanded="false" role="button">
         <ul class="dropdown-menu dropdown-menu-end ">
           <li><a class="dropdown-item" href="/profile">{{user_info.username}}</a></li>
           <li><a class="dropdown-item" onclick="logout()">Log Out</a></li>
         </ul>
       </div>
       {% else %}
-      <a href="/login" role="navigation" class="login-text"><div>Log In / Register</div></a>
+      <a href="/login" role="navigation" class="login-text">
+        <div>Log In / Register</div>
+      </a>
       {% endif %}
     </div>
   </nav>
@@ -97,16 +106,26 @@
           <p><a>Author</a>: {{buku_detail.Penulis}}</p>
           <p><a>Genre</a>: {{ buku_detail.Genre|join(', ') }}</p>
           <p>{{buku_detail.Deskripsi}}</p>
-          <a href="{{buku_detail.Link}}" target="_blank"><button class="btn btn-info read-more-btn">Read More</button></a>
-         
-          <a class="btn btn-warning bookmark-btn" id="bookmarkicon"  onclick="bookmark('{{buku_detail._id}}','bookmark','{{buku_detail.Cover}}','/detail/{{buku_detail.Judul}}','{{buku_detail.Judul}}')" aria-label="bookmark"><i class="fa fa-regular fa-bookmark"style="font-size: 21px;"></i></a>
+          <a href="{{buku_detail.Link}}" target="_blank"><button class="btn btn-info read-more-btn">Read
+              More</button></a>
+          {% if user_info == "" %}
+          <a class="btn btn-warning bookmark-btn" id="bookmarkicon" href="/login" aria-label="bookmark"><i
+              class="fa fa-regular fa-bookmark" style="font-size: 21px;"></i></a>
+          {% else %}
+          <a class="btn btn-warning bookmark-btn" id="bookmarkicon"
+            onclick="bookmark('{{buku_detail._id}}', 'bookmark', '{{buku_detail.Cover}}', '/detail/{{buku_detail.Judul}}', '{{buku_detail.Judul}}')"
+            aria-label="bookmark"><i class="fa fa-regular fa-bookmark" style="font-size: 21px;"></i></a>
+          {% endif %}
+
           {% if user_info %}
-            {% if user_info.status == 'admin'%}
-                <div class="edit-delete-container">
-                      <button class="btn btn-success edit-btn modal-button" style="width: 65px;" onclick='$("#modal-ter").addClass("is-active")'>Edit</button>
-                      <button class="btn btn-danger delete-btn" id="delete" onclick="return confirm('Apakah Anda yakin ingin menghapus buku dengan judul \'{{buku_detail.Judul}}\'?') ? delete_buku('{{buku_detail.Judul}}') : false;">Delete</button>
-                    </div>
-            {% endif %}
+          {% if user_info.status == 'admin'%}
+          <div class="edit-delete-container">
+            <button class="btn btn-success edit-btn modal-button" style="width: 65px;"
+              onclick='$("#modal-ter").addClass("is-active")'>Edit</button>
+            <button class="btn btn-danger delete-btn" id="delete"
+              onclick="return confirm('Apakah Anda yakin ingin menghapus buku dengan judul \'{{buku_detail.Judul}}\'?') ? delete_buku('{{buku_detail.Judul}}') : false;">Delete</button>
+          </div>
+          {% endif %}
           {% endif %}
         </div>
       </div>

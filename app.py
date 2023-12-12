@@ -35,14 +35,10 @@ def home():
         collection = db.books_collection.find({},{'_id':False}).limit(9)
         list_buku=list(collection)
         return render_template('index.html', user_info=user_info,books=list_buku)    
-    except jwt.ExpiredSignatureError:
-        collection = db.books_collection.find({},{'_id':False})
-        for buku in collection:
-            return render_template('index.html',books=buku)    
-    except jwt.exceptions.DecodeError:
-        collection = db.books_collection.find({},{'_id':False})
-        for buku in collection:
-            return render_template('index.html',books=buku)    
+    except (jwt.ExpiredSignatureError,jwt.exceptions.DecodeError):
+        collection = db.books_collection.find({},{'_id':False}).limit(9)
+        list_buku=list(collection)
+        return render_template('index.html',books=list_buku)       
 
 @app.route("/login")
 def login():
@@ -103,8 +99,10 @@ def collection():
         return render_template('collection.html', user_info=user_info,books=collection,current_page=page,total_pages=total_pages)    
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         collection = db.books_collection.find({},{'_id':False})
-        for buku in collection:
-            return render_template('collection.html',books=buku)    
+        total_books = db.books_collection.count_documents({})
+        total_pages = math.ceil(total_books / per_page)
+        collection = list(db.books_collection.find({},{'_id':False}).skip(offset).limit(per_page))
+        return render_template('collection.html',books=collection,current_page=page,total_pages=total_pages)    
     
 @app.route('/detail/<keyword>', methods=['GET'])
 def detail(keyword):
@@ -115,12 +113,15 @@ def detail(keyword):
         books_collection = db.books_collection.find_one({'Judul':keyword})
         if 'Genre' in books_collection:
             genre_to_search = books_collection['Genre']
-            print(genre_to_search)
             discovery = db.books_collection.find({"Genre": {"$all":genre_to_search}})
             return render_template('detail.html',buku_detail=books_collection,user_info=user_info,discovery=discovery)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         books_collection = db.books_collection.find_one({'Judul':keyword})
-        return render_template('detail.html',buku_detail=books_collection)
+        if 'Genre' in books_collection:
+            genre_to_search = books_collection['Genre']
+            discovery = db.books_collection.find({"Genre": {"$all":genre_to_search}})
+            return render_template('detail.html',buku_detail=books_collection,user_info='',discovery=discovery)
+
 
 @app.route('/bookmark/add', methods=['POST'])
 def bookmarkadd():
@@ -130,7 +131,6 @@ def bookmarkadd():
         user_info = db.user.find_one({"username": payload["id"]})
         cover_receive = request.form["cover_give"]
         detail_receive = request.form["detail_give"]
-        action_receive = request.form["action_give"]
         type_receive = request.form["type_give"]
         id_receive = request.form["id_give"]
         judul_receive = request.form["judul_give"]

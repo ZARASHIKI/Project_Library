@@ -206,9 +206,9 @@ section .main .main_img img {
 }
 
 .bukusss .bukusss_box {
-    width: 60%;
-    min-height: 85%;
-    background: url('/static/FrameAbu2.png') center/cover;
+    width: 1000px; 
+    height: 1280px;
+    background: url('/static/FrameAbu2.png') center/cover no-repeat;size: contain;
     border-radius: 10px;
     border: 0.5px solid #2c2c2c;
 }
@@ -219,7 +219,7 @@ section .main .main_img img {
     grid-template-rows: auto;
     grid-auto-flow: row;
     grid-gap: 20px;
-    grid-row-gap: 30%;
+    grid-row-gap: 32%;
     margin-top: 100px;
     margin-left: 90px;
     max-width: 79%;
@@ -263,7 +263,7 @@ section .main .main_img img {
         .bukusss .bukusss_box .bukusss_card {
             grid-template-columns: repeat(3, 1fr);
             grid-column-gap: 16%;
-            grid-row-gap: 25%;
+            grid-row-gap: 31%;
             margin-top: 15%;
             margin-left: 15%;
 
@@ -291,7 +291,7 @@ section .main .main_img img {
 
 }
 
-@media (max-width: 1366) {
+@media only sccreen and (max-width: 1366) {
     @media (max-height:768px) {
         .bukusss .bukusss_box {
             width: 165%;

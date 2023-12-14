@@ -138,7 +138,6 @@ def bookmarkadd():
         if cek_dup:
             db.bookmark.delete_one(cek_dup)
         else:
-            # If bookmark doesn't exist, insert it
             doc = {
                 "bookmark_id": id_receive,
                 "type": type_receive,
@@ -154,10 +153,10 @@ def bookmarkadd():
         return redirect(url_for("login"))
 
 
-@app.route('/bookmark/get', methods=['GET'])
+@app.route('/bookmark/cek', methods=['GET'])
 def bookmarkget():
     token_receive = request.cookies.get("mytoken")
-    try:
+    try:    
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         username_receive = request.args.get("username_give")
         if username_receive == "":
@@ -172,8 +171,7 @@ def bookmarkget():
                     {"bookmark_id": bookmark["bookmark_id"], "type": "bookmark", "username": payload["id"]}
                 )
             )
-            print(bookmark)
-        return jsonify({"result": "success","msg": "Successful fetched all posts","bookmark": bookmark_get,})
+        return jsonify({"result": "success","msg": "Successful fetched all posts","bookmark": bookmark_get})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("login", msg="You Need To Login First"))
 
@@ -181,13 +179,26 @@ def bookmarkget():
 @app.route('/bookmark', methods=['GET'])
 def bookmark():
     token_receive = request.cookies.get("mytoken")
-    try:
+    try:    
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         user_info = db.user.find_one({"username": payload["id"]})
-        return render_template('bookmark.html', user_info=user_info)    
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="You Need To Login First"))
-    except jwt.exceptions.DecodeError:
+        username_receive = db.user.find_one({"username":user_info["profile_name"]})
+        page = request.args.get('page', default=1, type=int)
+        per_page = 9
+        offset = (page - 1) * per_page
+        total_books = db.bookmark.count_documents({})
+        total_pages = math.ceil(total_books / per_page)
+        bookmark_get = list(db.bookmark.find({"username":username_receive["profile_name"]}).skip(offset).limit(per_page))
+
+        for bookmark in bookmark_get:
+            bookmark["_id"] = str(bookmark["_id"])
+            bookmark["bookmark_me"] = bool(
+                db.bookmark.find_one(
+                    {"bookmark_id": bookmark["bookmark_id"], "type": "bookmark", "username": payload["id"]}
+                )
+            )
+        return render_template('bookmark.html', user_info=user_info,bookmark=bookmark_get,current_page=page,total_pages=total_pages)    
+    except (jwt.ExpiredSignatureError,jwt.exceptions.DecodeError):
         return redirect(url_for("login", msg="You Need To Login First"))
 
 @app.route("/tambah_buku/save", methods=["POST"])

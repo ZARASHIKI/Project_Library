@@ -141,7 +141,20 @@ function bookmark(id, type, cover, detail, judul) {
 }
 
 // get bookmark
-function getbookmark(username, judul) {
+
+function loadboomark(page) {
+    $.ajax({
+        type: "GET",
+        url: `/bookmark?page=${page}`,
+        success: function (response) {
+            cekbookmark()
+            $("#current-page").text(page);
+            $("#total-pages").text(2);
+        },
+    });
+}
+
+function cekbookmark(username, judul) {
     if (username === undefined) {
         username = "";
     }
@@ -149,7 +162,7 @@ function getbookmark(username, judul) {
     let hasMatchingBookmark = false; 
     $.ajax({
         type: "GET",
-        url: `/bookmark/get?username_give=${username}`,
+        url: `/bookmark/cek?username_give=${username}`,
         data: {},
         success: function (response) {
             if (response["result"] === "success") {
@@ -157,8 +170,6 @@ function getbookmark(username, judul) {
                 for (let i = 0; i < bookmark.length; i++) {
                     let bookmark1 = bookmark[i];
                     let judul1 = bookmark1['judul'];
-                    let temp_html = `<div class="koleksian_card"><div class="koleksian_image" ><a href="${bookmark1['detail']}"><img src="/static/${bookmark1['cover']}" /></a></div>${bookmark1['judul']}</div>`;
-                    $("#bookmarkcard").append(temp_html);
                     if (judul1 === judul) {
                         hasMatchingBookmark = true;
                     }
@@ -198,15 +209,12 @@ function editprofile() {
 }
 
 function loadPage(page) {
-    console.log(page)
     $.ajax({
         type: "GET",
         url: `/collection?page=${page}`,
         success: function (response) {
             $("#current-page").text(page);
-            // Update total-pages di sini jika total halaman diketahui
             $("#total-pages").text(2);
-            // Tambahkan logika untuk menampilkan data di HTML
         },
     });
 }

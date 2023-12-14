@@ -134,31 +134,25 @@ def bookmarkadd():
         type_receive = request.form["type_give"]
         id_receive = request.form["id_give"]
         judul_receive = request.form["judul_give"]
-        cek_dup = db.bookmark.find_one({"judul":judul_receive})
+        cek_dup = db.bookmark.find_one({"judul": judul_receive, "username": user_info["profile_name"]})
         if cek_dup:
-            doc = {
-                "bookmark_id":id_receive,
-                "type":type_receive,
-                "cover": cover_receive,
-                "username":user_info['profile_name'],
-                "detail": detail_receive,
-                "judul":judul_receive
-            }
-            db.bookmark.delete_one(doc)
+            db.bookmark.delete_one(cek_dup)
         else:
+            # If bookmark doesn't exist, insert it
             doc = {
-                "bookmark_id":id_receive,
-                "type":type_receive,
+                "bookmark_id": id_receive,
+                "type": type_receive,
                 "cover": cover_receive,
-                "username":user_info['profile_name'],
+                "username": user_info['profile_name'],
                 "detail": detail_receive,
-                "judul":judul_receive
+                "judul": judul_receive
             }
             db.bookmark.insert_one(doc)
 
         return jsonify({"result": "success"})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("login"))
+
 
 @app.route('/bookmark/get', methods=['GET'])
 def bookmarkget():

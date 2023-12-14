@@ -114,7 +114,7 @@ function bookmark(id, type, cover, detail, judul) {
                 action_give: 'Bookmark'
             },
             success: function (response) {
-                alert("Success add bookmark")
+                window.location.reload()
                 mark.css("color", "red")
             },
         });
@@ -133,7 +133,7 @@ function bookmark(id, type, cover, detail, judul) {
                 action_give: 'unbook'
             },
             success: function (response) {
-                alert("Delete bookmark success")
+                window.location.reload()
                 mark.css("color", "white")
             },
         });

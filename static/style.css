@@ -531,7 +531,7 @@ section .main .main_img img {
 .dua-container {
     width: 80vh;
     padding: 32px;
-    /* border: 2px solid black; */
+    /* border: 1px solid black; */
     margin-top: 20px;
 }
 

@@ -158,7 +158,7 @@
         </button>
       {% endif %}
     {% endif %}
-
+    
     <h1 style="font-weight: bold; font-size: x-large; justify-content: center; margin-bottom: 30px; margin-left:60px">
       Collections Book</h1>
     <div class="papan">
@@ -169,7 +169,10 @@
         {% set Judul = buku.Judul %}
         <div class="koleksian_card">
           <div class="koleksian_image">
-            <a href="/detail/{{Judul}}"><img src="/static/{{Cover}}"/></a>
+            <a href="/detail/{{Judul}}"><img class="cover-image" src="/static/{{Cover}}"/></a>
+            <a href="/detail/{{Judul}}" class="hover-card">
+              <h4>{{Judul}}</h4><br>
+            </a>
           </div>
         </div>
         {% endfor %}

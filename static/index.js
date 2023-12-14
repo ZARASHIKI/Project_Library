@@ -157,7 +157,7 @@ function getbookmark(username, judul) {
                 for (let i = 0; i < bookmark.length; i++) {
                     let bookmark1 = bookmark[i];
                     let judul1 = bookmark1['judul'];
-                    let temp_html = `<div class="koleksian_card"><div class="koleksian_image" ><a href="${bookmark1['detail']}"><img src="/static/${bookmark1['cover']}" /></a></div></div>`;
+                    let temp_html = `<div class="koleksian_card"><div class="koleksian_image" ><a href="${bookmark1['detail']}"><img src="/static/${bookmark1['cover']}" /></a></div>${bookmark1['judul']}</div>`;
                     $("#bookmarkcard").append(temp_html);
                     if (judul1 === judul) {
                         hasMatchingBookmark = true;

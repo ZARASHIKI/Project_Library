@@ -206,9 +206,10 @@ section .main .main_img img {
 }
 
 .bukusss .bukusss_box {
-    width: 1000px; 
+    width: 1000px;
     height: 1280px;
-    background: url('/static/FrameAbu2.png') center/cover no-repeat;size: contain;
+    background: url('/static/FrameAbu2.png') center/cover no-repeat;
+    size: contain;
     border-radius: 10px;
     border: 0.5px solid #2c2c2c;
 }
@@ -415,6 +416,8 @@ section .main .main_img img {
     margin: auto 20px;
 }
 
+
+
 .koleksian .bookmark_box .koleksian_image {
     width: 100%;
     text-align: center;
@@ -456,6 +459,50 @@ section .main .main_img img {
 .koleksian .koleksian_box .koleksian_image:hover img {
     transform: scale(1.1);
 }
+
+/* Hover efek koleksian */
+.koleksian_card {
+    position: relative;
+    overflow: hidden;
+}
+
+.cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.hover-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 98%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.hover-card h4 {
+    color: white;
+    margin: 0;
+    font-weight: 700;
+}
+
+.koleksian_card:hover .cover-image {
+    transform: scale(1.1);
+}
+
+.koleksian_card:hover .hover-card {
+    opacity: 1;
+}
+
+/* \\\\\\\\ */
 
 
 /* Page Detail Buku */

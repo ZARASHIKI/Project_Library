@@ -183,13 +183,12 @@ def bookmark():
     try:    
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         user_info = db.user.find_one({"username": payload["id"]})
-        username_receive = db.user.find_one({"username":user_info["profile_name"]})
         page = request.args.get('page', default=1, type=int)
         per_page = 9
         offset = (page - 1) * per_page
         total_books = db.bookmark.count_documents({})
         total_pages = math.ceil(total_books / per_page)
-        bookmark_get = list(db.bookmark.find({"username":username_receive["profile_name"]}).skip(offset).limit(per_page))
+        bookmark_get = list(db.bookmark.find({"username":user_info["profile_name"]}).skip(offset).limit(per_page))
 
         for bookmark in bookmark_get:
             bookmark["_id"] = str(bookmark["_id"])

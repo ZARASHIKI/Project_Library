@@ -604,7 +604,6 @@ section .main .main_img img {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     overflow: hidden;
-    overflow-x: scroll;
 }
 
 .discover .discover-book-box .discover-book-card {
@@ -763,3 +762,31 @@ h3 {
     margin-left: 25px;
     margin-bottom: 5px;
 }
+
+.discover-buttonl{
+    position: relative;
+    top: 34%;
+    transform: translateY(50%);
+    right: 3,3%;
+    background-color: rgba(0, 0, 0, 0.3);    
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .discover-buttonr {
+    position:relative;
+    top: -27%;
+    transform: translateY(50%);
+    background-color: rgba(0, 0, 0, 0.3);
+    right: -100%;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    z-index: 1;
+  }
+  .discover:hover .discover-button {
+    display: block;
+  }

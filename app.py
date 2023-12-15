@@ -117,7 +117,8 @@ def detail(keyword):
             return render_template('detail.html',buku_detail=books_collection,user_info=user_info,discovery=discovery)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         books_collection = db.books_collection.find_one({'Judul':keyword})
-        if 'Genre' in books_collection:
+        genre = 'Genre'
+        if genre in books_collection:
             genre_to_search = books_collection['Genre']
             discovery = db.books_collection.find({"Genre": {"$all":genre_to_search}})
             return render_template('detail.html',buku_detail=books_collection,user_info='',discovery=discovery)
